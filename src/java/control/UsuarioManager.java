@@ -18,15 +18,15 @@ import model.Usuario;
 @SessionScoped
 public class UsuarioManager {
     
-    private Usuario usuario;
+    private Usuario usuario = new Usuario();
     private List<Usuario> usuarios;
-    
-    
+        
     /**
      * 
      * @return retorna o objeto usuario para a tela
      */
     public Usuario getUsuario() {
+        
         return this.usuario;
     }
     
@@ -56,6 +56,11 @@ public class UsuarioManager {
      */
     public void setUsuarios(List<Usuario> usuarios){
         this.usuarios = usuarios;
+    }
+    
+    public String logar(){
+        //usuario = new Usuario();
+        return "principal";
     }
     
 }
