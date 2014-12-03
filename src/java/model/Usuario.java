@@ -51,7 +51,13 @@ public class Usuario  implements java.io.Serializable {
     
     public void setSituacao(String situacao) {
         this.situacao = situacao;
-    }
+    }/*
+      @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idusuario != null ? idusuario.hashCode() : 0);
+        return hash;
+    }*/
 
 
 

@@ -6,26 +6,31 @@
 package dao.util;
 
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 /**
  *
- * @author vinicius.lemos
+ * @author vinicius.lemos 
  */
 public class Conn {
 
-    SessionFactory sessao;
-    Transaction transaction;
+    public SessionFactory factory;
+    public Transaction transaction;
+    public Session sessao;
 
     public void abreConexao() {
-        sessao = HibernateUtil.getSessionFactory(); //Abrindo uma sessão
-        transaction = sessao.getCurrentSession().beginTransaction();
+        factory = HibernateUtil.getSessionFactory(); //Abrindo uma sessão
+        sessao = factory.openSession();
+        transaction = sessao.beginTransaction();
+        
     }
 
     public void fechaConexao() {
-        sessao.close();
         transaction = null;
+        sessao.close();
+       // factory.close(); não fecha esta porra senão da ruim!!!!! 
     }
     
 }

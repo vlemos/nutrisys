@@ -26,9 +26,9 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
         
         try {
             abreConexao();
-            sessao.getCurrentSession().save(t);
-            sessao.getCurrentSession().flush();
+            sessao.save(t);
             transaction.commit();
+            sessao.flush();
             fechaConexao();
             return "Salvo com sucesso";
         } catch (HibernateException e) {
