@@ -21,4 +21,9 @@ public class MenuManager {
         return "/index.xhtml";
     }
     
+    public String menuUsuario(){
+        System.out.println("chamou o menuUsuario");
+        return "/restrito/usuario.xhtml";
+    }
+    
 }
