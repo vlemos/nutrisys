@@ -40,9 +40,9 @@ public class UsuarioDao extends Conn {
             abreConexao();
             
             //System.out.println("Fez a consulta do Usuario");
-            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.login=?")
-                    //.setString(0, "ATIVO")
-                    .setString(0, login)
+            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.situacao=? and usu.login=?")
+                    .setString(0, "ATIVO")
+                    .setString(1, login)
                     .uniqueResult();
             fechaConexao();
         } catch (HibernateException e) {
