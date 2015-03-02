@@ -26,6 +26,7 @@ CREATE TABLE usuario
   senha bytea NOT NULL,
   situacao character varying(10) NOT NULL,
   idgrupo integer,
+  trocasenha character varying(1) NOT NULL,
   CONSTRAINT pk_usuario PRIMARY KEY (idusuario),
   CONSTRAINT fk_idgrupo FOREIGN KEY (idgrupo)
       REFERENCES grupo (idgrupo) MATCH SIMPLE
@@ -41,11 +42,12 @@ ALTER TABLE usuario
 
 
 
+
 INSERT INTO grupo(
              nome)
     VALUES ('admin');
 
 
 INSERT INTO usuario(
-            login, senha, situacao, idgrupo)
-    VALUES ('admin','admin','ATIVO', 1);
+            login, senha, situacao, idgrupo,trocasenha)
+    VALUES ('admin','admin','ATIVO', 1,'n');

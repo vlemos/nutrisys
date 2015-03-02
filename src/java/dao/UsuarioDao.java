@@ -7,6 +7,7 @@ package dao;
 
 import dao.util.Conn;
 import dao.util.GenericDao;
+import java.util.List;
 import model.Usuario;
 import org.hibernate.HibernateException;
 
@@ -18,9 +19,15 @@ import org.hibernate.HibernateException;
 public class UsuarioDao extends Conn {
     
     private  static UsuarioDao instancia;    
+    private final GenericDao<Usuario> dao;
 
     
+    private UsuarioDao(){ dao = new GenericDao<>(); }
     
+    /**
+     *
+     * @return Singleton da classe UsuarioDao
+     */
     public static UsuarioDao getInstance() {
         if (instancia == null) {
             instancia = new UsuarioDao();
@@ -28,12 +35,29 @@ public class UsuarioDao extends Conn {
         return instancia;
     } 
   
-  public String salvar(Usuario u){
-      GenericDao<Usuario> dao = new GenericDao();
+    /**
+     *
+     * @param u
+     * @return retorna String informando se o objeto foi salvo ou não
+     */
+    public String salvar(Usuario u){
       return dao.salvar(u);
       
   }
+  
+    /**
+     *
+     * @return retorna lista de todos os usuarios
+     */
+    public List<Usuario> listaTodos(){
+      return dao.listarTodos("from Usuario");
+  }
 
+    /**
+     *
+     * @param login
+     * @return Busca usuario por Nome com situação ATIVO
+     */
     public Usuario buscarPorNomeAtivo(String login) {
         Usuario usuario = null;
         try {

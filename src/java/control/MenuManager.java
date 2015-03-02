@@ -17,13 +17,30 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class MenuManager {
     
+    /**
+     *
+     * @return para Saida do Programa
+     */
     public String logout(){
         return "/index.xhtml";
     }
     
+    /**
+     *
+     * @return Chama o Menu de Usuario
+     */
     public String menuUsuario(){
         System.out.println("chamou o menuUsuario");
         return "/restrito/usuario.xhtml";
+    }
+    
+    /**
+     *
+     * @return Chama o Menu do Grupo
+     */
+    public String menuGrupo(){
+        System.out.println("chamou o menuGrupo");
+        return "/restrito/grupo.xhtml";
     }
     
 }

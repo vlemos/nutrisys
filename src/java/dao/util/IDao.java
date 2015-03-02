@@ -15,10 +15,44 @@ import java.util.List;
  */
 public interface IDao<T> {
            
+    /**
+     *
+     * @param t
+     * @return 
+     * Interface do metodo salvar
+     */
     String salvar(T t);
+
+    /**
+     *
+     * @param t
+     * @return
+     * Interface do metodo Atualizar
+     */
     String atualizar(T t);
+
+    /**
+     *
+     * @param t
+     * @return
+     * Interface do metodo remover
+     */
     String remover(T t);
-    List<T> listarTodos();
+
+    /**
+     *
+     * @param t
+     * @return
+     * Interface do metodo listarTodos
+     */
+    List<T> listarTodos(T t);
+
+    /**
+     *
+     * @param situacao
+     * @return
+     * Interface do metodo listarTodosSituacao
+     */
     List<T> listarTodosSituacao(String situacao);
             
     

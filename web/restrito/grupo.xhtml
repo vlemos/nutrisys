@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Sistema Nutrisys</title>
+    </h:head>
+    <h:body>       
+
+
+        <div class="header">
+            <ui:insert name="header">
+                <ui:include src="/restrito/principal.xhtml"></ui:include>
+            </ui:insert>
+        </div>
+
+               
+        <h:form id="form">
+            
+            <p:growl id="msgs" showDetail="true" />
+            
+            <p:panel id="pGrupo" header="Cadastro de Grupos" >
+                
+                <p:menubar autoDisplay="false" >
+                    <p:menuitem value="Novo" icon="ui-icon-document-b" actionListener="#"  />
+                    <p:menuitem value="Atualizar" icon="ui-icon-pencil" actionListener="#"  />
+                    <p:menuitem value="Excluir" icon="ui-icon-trash" actionListener="#"  />
+                </p:menubar>
+                
+               
+                
+                <p:dataTable  var="grupo" value="#{grupoManager.grupos}" rows="10" paginator="true"
+                              selectionMode="single" selection="#{grupoManager.grupo}" rowKey="#{grupo.idgrupo}"
+                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              rowsPerPageTemplate="5,10,15" 
+                              emptyMessage="Nenhum registro encontrado">
+                    
+                    <p:ajax event="rowSelect" listener="#{grupoManager.onRowSelect}" update=":form:msgs" />
+                    <p:ajax event="rowUnselect" listener="#{grupoManager.onRowUnselect}" update=":form:msgs" />
+
+                    <p:column headerText="Nome" filterBy="#{grupo.nome}" filterMatchMode="contains">
+                        <h:outputText value="#{grupo.nome}" />
+                    </p:column>
+
+                  
+
+                </p:dataTable>
+            </p:panel> 
+        </h:form>
+
+    </h:body>
+</html>
+

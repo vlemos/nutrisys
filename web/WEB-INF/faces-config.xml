@@ -4,4 +4,12 @@
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
 
+    
+    <converter>
+        <converter-id>conversor</converter-id>
+        <converter-class>model.util.Converte</converter-class>
+    </converter>
+    
+    
+    
 </faces-config>

@@ -16,10 +16,24 @@ import org.hibernate.Transaction;
  */
 public class Conn {
 
+    /**
+     * Fabrica de Conexos
+     */
     public SessionFactory factory;
+
+    /**
+     * Transaction das operaçõe de Banco
+     */
     public Transaction transaction;
+
+    /**
+     * Sessao do Banco
+     */
     public Session sessao;
 
+    /**
+     * Abre conexão com o Banco
+     */
     public void abreConexao() {
         factory = HibernateUtil.getSessionFactory(); //Abrindo uma sessão
         sessao = factory.openSession();
@@ -27,6 +41,9 @@ public class Conn {
         
     }
 
+    /**
+     * Fecha conexão com o Banco
+     */
     public void fechaConexao() {
         transaction = null;
         sessao.close();

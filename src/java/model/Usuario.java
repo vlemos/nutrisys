@@ -1,5 +1,5 @@
 package model;
-// Generated 30/10/2014 12:13:30 by Hibernate Tools 4.3.1
+// Generated 04/12/2014 12:06:15 by Hibernate Tools 4.3.1
 
 
 
@@ -10,54 +10,145 @@ public class Usuario  implements java.io.Serializable {
 
 
      private int idusuario;
+     private Grupo grupo;
      private String login;
      private byte[] senha;
      private String situacao;
+     private String trocasenha;
 
+    /**
+     * Model Usuario
+     */
     public Usuario() {
     }
 
-    public Usuario(int idusuario, String login, byte[] senha, String situacao) {
+    /**
+     *
+     * @param idusuario
+     * @param login
+     * @param senha
+     * @param situacao
+     * @param trocasenha
+     */
+    public Usuario(int idusuario, String login, byte[] senha, String situacao, String trocasenha) {
+        this.idusuario = idusuario;
+        this.login = login;
+        this.senha = senha;
+        this.situacao = situacao;
+        this.trocasenha = trocasenha;
+    }
+
+    /**
+     *
+     * @param idusuario
+     * @param grupo
+     * @param login
+     * @param senha
+     * @param situacao
+     * @param trocasenha
+     */
+    public Usuario(int idusuario, Grupo grupo, String login, byte[] senha, String situacao, String trocasenha) {
        this.idusuario = idusuario;
+       this.grupo = grupo;
        this.login = login;
        this.senha = senha;
        this.situacao = situacao;
+       this.trocasenha = trocasenha;
     }
    
+    /**
+     *
+     * @return
+     */
     public int getIdusuario() {
         return this.idusuario;
     }
     
+    /**
+     *
+     * @param idusuario
+     */
     public void setIdusuario(int idusuario) {
         this.idusuario = idusuario;
     }
+
+    /**
+     *
+     * @return
+     */
+    public Grupo getGrupo() {
+        return this.grupo;
+    }
+    
+    /**
+     *
+     * @param grupo
+     */
+    public void setGrupo(Grupo grupo) {
+        this.grupo = grupo;
+    }
+
+    /**
+     *
+     * @return
+     */
     public String getLogin() {
         return this.login;
     }
     
+    /**
+     *
+     * @param login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
+
+    /**
+     *
+     * @return
+     */
     public byte[] getSenha() {
         return this.senha;
     }
     
+    /**
+     *
+     * @param senha
+     */
     public void setSenha(byte[] senha) {
         this.senha = senha;
     }
+
+    /**
+     *
+     * @return
+     */
     public String getSituacao() {
         return this.situacao;
     }
     
+    /**
+     *
+     * @param situacao
+     */
     public void setSituacao(String situacao) {
         this.situacao = situacao;
-    }/*
-      @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idusuario != null ? idusuario.hashCode() : 0);
-        return hash;
-    }*/
+    }
+
+    /**
+     * @return the trocasenha
+     */
+    public String getTrocasenha() {
+        return trocasenha;
+    }
+
+    /**
+     * @param trocasenha the trocasenha to set
+     */
+    public void setTrocasenha(String trocasenha) {
+        this.trocasenha = trocasenha;
+    }
 
 
 

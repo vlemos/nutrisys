@@ -16,11 +16,41 @@
             </ui:insert>
         </div>
 
-        <h:form>
+               
+        <h:form id="form">
+            
+            <p:growl id="msgs" showDetail="true" />
+            
             <p:panel id="pUsuario" header="Cadastro de Usuarios" >
+                
+                <p:menubar autoDisplay="false" >
+                    <p:menuitem value="Novo" icon="ui-icon-document-b" action="#{usuarioManager.novo}"  />
+                    <p:menuitem value="Atualizar" icon="ui-icon-pencil" action="#"  />
+                    <p:menuitem value="Excluir" icon="ui-icon-trash" action="#"  />
+                </p:menubar>
+                     
+                <p:dataTable  var="usuario" value="#{usuarioManager.usuarios}" rows="10" paginator="true"
+                              selectionMode="single" selection="#{usuarioManager.usuario}" rowKey="#{usuario.idusuario}"
+                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                              rowsPerPageTemplate="5,10,15" 
+                              emptyMessage="Nenhum registro encontrado">
+                    
+                    <p:ajax event="rowSelect" listener="#{usuarioManager.onRowSelect}" update=":form:msgs" />
+                    <p:ajax event="rowUnselect" listener="#{usuarioManager.onRowUnselect}" update=":form:msgs" />
 
+                    <p:column headerText="Login" filterBy="#{usuario.login}" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.login}" />
+                    </p:column>
 
-                <h:outputText value="Cadastro de usuario...." />    
+                    <p:column headerText="Situação" filterBy="#{usuario.situacao}" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.situacao}" />
+                    </p:column>
+
+                    <p:column headerText="Grupo" filterBy="#{usuario.grupo.nome}" filterMatchMode="contains">
+                        <h:outputText value="#{usuario.grupo.nome}" />
+                    </p:column>
+
+                </p:dataTable>
             </p:panel> 
         </h:form>
 
