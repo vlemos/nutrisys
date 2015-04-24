@@ -5,8 +5,10 @@
  */
 package control;
 
+import static control.UsuarioManager.logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -16,6 +18,8 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name = "menuManager")
 @SessionScoped
 public class MenuManager {
+    
+    final static Logger logger = Logger.getLogger(MenuManager.class);
     
     /**
      *
@@ -30,7 +34,7 @@ public class MenuManager {
      * @return Chama o Menu de Usuario
      */
     public String menuUsuario(){
-        System.out.println("chamou o menuUsuario");
+        logger.info("chamou o menuUsuario");
         return "/restrito/usuario.xhtml";
     }
     
@@ -39,7 +43,7 @@ public class MenuManager {
      * @return Chama o Menu do Grupo
      */
     public String menuGrupo(){
-        System.out.println("chamou o menuGrupo");
+        logger.info("chamou o menuGrupo");
         return "/restrito/grupo.xhtml";
     }
     

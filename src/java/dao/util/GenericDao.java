@@ -7,7 +7,8 @@ package dao.util;
 
 import java.io.Serializable;
 import java.util.List;
-import org.hibernate.HibernateException;
+import org.apache.log4j.Logger;
+import org.hibernate.exception.ConstraintViolationException;
 
 
 
@@ -17,7 +18,7 @@ import org.hibernate.HibernateException;
  * @param <T>
  */
 public class GenericDao<T> extends Conn implements IDao,Serializable {
-    
+    final static Logger logger = Logger.getLogger(GenericDao.class); 
     /**
      *
      * @param t
@@ -26,20 +27,22 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
      */
     @Override
     public String salvar(Object t) {
-        
+       logger.info("Entrou no genericDao .."); 
         try {
+            logger.info("Abrindo Conexao"); 
             abreConexao();
+            logger.info("Salvando Objeto"); 
             sessao.save(t);
             transaction.commit();
             sessao.flush();
             fechaConexao();
             return "Salvo com sucesso";
-        } catch (HibernateException e) {
+        } catch (ConstraintViolationException e){
+            return "O registro já existe na base ";
+        } catch (Exception e) {
             return "Erro ao salvar!" + e.getMessage();
-        } finally {
-            fechaConexao();
-        }
-
+        } 
+          
     }
 
     /**

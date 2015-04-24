@@ -19,7 +19,7 @@
             <p:growl id="msgs" showDetail="true" />
 
             <p:menubar autoDisplay="false" >
-                <p:menuitem value="Gravar" icon="ui-icon-disk" actionListener="#"  />
+                <p:menuitem value="Gravar" icon="ui-icon-disk" actionListener="#{usuarioManager.gravar}" update="msgs" />
                 <p:menuitem value="Voltar" icon="ui-icon-arrowreturnthick-1-w" action="#{menuManager.menuUsuario}"  />
             </p:menubar>
 
@@ -40,9 +40,7 @@
                 <p:selectOneMenu id="sit" value="#{usuarioManager.usuario.situacao}" >  
                     <f:selectItems value="#{usuarioManager.situacoes}" var="status" itemLabel="#{status.label}" itemValue="#{status}"/>  
                 </p:selectOneMenu>    
-
-                <h:outputText value="Trocar Senha?" />
-                <p:inputSwitch value="#{usuarioManager.usuario.trocasenha}" />
+               
             </p:panelGrid>
         </h:form>
 

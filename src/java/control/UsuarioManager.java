@@ -18,6 +18,7 @@ import model.Usuario;
 import model.util.Situacao;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.UnselectEvent;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,9 +27,10 @@ import org.primefaces.event.UnselectEvent;
 @ManagedBean(name = "usuarioManager")
 @SessionScoped
 public class UsuarioManager implements Serializable {
-
+   final static Logger logger = Logger.getLogger(UsuarioManager.class);
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarios;
+    private String acao = "";
     
     /**
      *
@@ -64,7 +66,8 @@ public class UsuarioManager implements Serializable {
     public List<Usuario> getUsuarios() {
         // aqui entrarar a consulta ao Banco de dados para buscar os usuarios cadastrados
         usuarios = new ArrayList<>();
-        return UsuarioDao.getInstance().listaTodos();
+        usuarios = UsuarioDao.getInstance().listaTodos();
+        return usuarios;
     }
 
     /**
@@ -80,9 +83,38 @@ public class UsuarioManager implements Serializable {
      * @return Chama a tela UsuarioManter
      */
     public String novo(){
-        
+        acao = "novo";
         usuario = new Usuario();
         return "/restrito/usuarioManter.xhtml";
+    }
+    
+    /**
+     * Grava o usuario ( Atualiza ou Inclui um Novo )
+     * @return Retorna para a pagina de Manutenção ou de lista de usuarios.
+     */
+    public String gravar() {
+        String retorno = "";
+        //usuario = new Usuario();
+       System.out.println("Entrou no menu gravar");
+       logger.info("Chamou o Menu Gravar");
+        if (acao.equals("novo")) {
+            logger.info("acao novo encontrado");
+            if ((usuario.getLogin().equals("")) || (Arrays.toString(usuario.getSenha()).equals("")) || ((usuario.getGrupo() == null)) || (usuario.getSituacao().equals(""))) {
+                logger.info("não preencheu os requisitos.... envia msg de erro");
+                FacesMessage msg = new FacesMessage("ERROR", "Favor preencher todos os campos");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return "/restrito/usuarioManter.xhtml";
+            } else {
+                logger.info("preencheu os requisitos... chama o DAO para Salvar");
+                usuario.setTrocasenha("N");
+                FacesMessage msg = new FacesMessage("",UsuarioDao.getInstance().salvar(usuario));
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return "/restrito/usuario.xhtml";
+            }
+        } else {
+            return "/restrito/usuarioManter.xhtml";
+        }
+
     }
     
     /**

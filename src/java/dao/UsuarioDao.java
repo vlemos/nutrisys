@@ -5,10 +5,12 @@
  */
 package dao;
 
+import control.UsuarioManager;
 import dao.util.Conn;
 import dao.util.GenericDao;
 import java.util.List;
 import model.Usuario;
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 
 
@@ -17,7 +19,7 @@ import org.hibernate.HibernateException;
  * @author vinicius.lemos
  */
 public class UsuarioDao extends Conn {
-    
+   final static Logger logger = Logger.getLogger(UsuarioDao.class); 
     private  static UsuarioDao instancia;    
     private final GenericDao<Usuario> dao;
 
@@ -41,6 +43,7 @@ public class UsuarioDao extends Conn {
      * @return retorna String informando se o objeto foi salvo ou não
      */
     public String salvar(Usuario u){
+       logger.info("Salvar do usuario....");
       return dao.salvar(u);
       
   }
@@ -64,13 +67,13 @@ public class UsuarioDao extends Conn {
             abreConexao();
             
             //System.out.println("Fez a consulta do Usuario");
-            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.situacao=? and usu.login=?")
+            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.situacao=? and usu.login=? ORDER BY usu.login asc")
                     .setString(0, "ATIVO")
                     .setString(1, login)
                     .uniqueResult();
             fechaConexao();
         } catch (HibernateException e) {
-            System.out.println("Erro na consulta " + e.getMessage());
+            logger.info("Erro na consulta " + e.getMessage());
             fechaConexao();
         } 
         return usuario;
