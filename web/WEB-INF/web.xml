@@ -25,9 +25,9 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
     
-    
-    <context-param> 
+       <context-param> 
         <param-name>primefaces.THEME</param-name>
-        <param-value>redmond</param-value>
+        <param-value>afterdark</param-value>
     </context-param>
+ 
 </web-app>

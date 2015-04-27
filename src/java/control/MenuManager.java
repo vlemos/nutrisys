@@ -5,7 +5,6 @@
  */
 package control;
 
-import static control.UsuarioManager.logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.apache.log4j.Logger;

@@ -97,16 +97,20 @@ public class UsuarioManager implements Serializable {
      * Remove a seleção atual
      * @return Retorna a propria pagina
      */
-    public String remover(){
-        logger.info("usuario selecionado para ser removido " + usuario.getLogin());
-        if(usuario.getLogin().equals("admin")){
-            logger.info("não pode remover admin");
-            addMessage("Atenção", "O usuario admin não pode ser removido");
+    public String remover() {
+        if (usuario != null ) {
+            logger.info("usuario selecionado para ser removido " + usuario.getLogin());
+            if (usuario.getLogin().equals("admin")) {
+                logger.info("não pode remover admin");
+                addMessage("Atenção", "O usuario admin não pode ser removido");
+            } else {
+                logger.info("chama o remover do dao de usuario");
+                addMessage("Remover", UsuarioDao.getInstance().remover(usuario));
+            }
+          
         }else{
-            logger.info("chama o remover do dao de usuario");
-            addMessage("Remover",UsuarioDao.getInstance().remover(usuario));
+            addMessage("", "Favor Selecionar um Usuario");
         }
-        
         return "/restrito/usuario.xhtml";
     }
     
@@ -115,9 +119,15 @@ public class UsuarioManager implements Serializable {
      * @return Pagina de Manter Usuario 
      */
     public String atualizar(){
-        acao = "atualizar";
-        setAlteraCampoLogin(true);
-        return "/restrito/usuarioManter.xhtml";
+        if (usuario != null) {
+            acao = "atualizar";
+            setAlteraCampoLogin(true);
+            return "/restrito/usuarioManter.xhtml";
+        }else{
+            addMessage("", "Favor selecionar um usuario");
+            return "/restrito/usuario.xhtml";
+        }
+        
     }
     
      public void addMessage(String summary, String detail) {

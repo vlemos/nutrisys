@@ -8,19 +8,16 @@
     <h:head>
         <title>Sistema Nutrisys</title>
     </h:head>
-    <h:body>       
-
-     
+    <h:body>         
             <div class="header">
                 <ui:insert name="header">
                     <ui:include src="/logo.xhtml"></ui:include>
                 </ui:insert>
             </div>
-     
-
         <h:form id="fMenu">
-         
-            <p:menubar style="margin-top: 5% " autoDisplay="false" id="menuBar" >
+            
+                
+            <p:menubar style="margin-top: 1% " autoDisplay="false" id="menuBar" >
                 <p:submenu label="Cadastro" icon="ui-icon-document" >
                     <p:submenu label="usuario" icon="ui-icon-contact" >
                         <p:menuitem value="Grupo Usuario" action="#{menuManager.menuGrupo}" />
