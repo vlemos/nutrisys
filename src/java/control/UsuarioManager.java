@@ -170,13 +170,13 @@ public class UsuarioManager implements Serializable {
 
     private boolean verificaCampos() {
         if ((usuario.getLogin().equals("")) || (Arrays.toString(usuario.getSenha()).equals("")) || ((usuario.getGrupo() == null)) || (usuario.getSituacao().equals(""))) {
-            logger.info("não preencheu os requisitos.... envia msg de erro " + usuario.getLogin() + " " + usuario.getSenha().toString() + " " + usuario.getGrupo() + " "
+            logger.info("não preencheu os requisitos.... envia msg de erro " + usuario.getLogin() + " " + Arrays.toString(usuario.getSenha()) + " " + usuario.getGrupo() + " "
                     + usuario.getSituacao());
             
             addMessage("ERROR", "Favor preencher todos os campos");
             return false;
         } else {
-             logger.info("preencheu os requisitos.... " + usuario.getLogin() + " " + usuario.getSenha().toString() + " " + usuario.getGrupo() + " "
+             logger.info("preencheu os requisitos.... " + usuario.getLogin() + " " + Arrays.toString(usuario.getSenha()) + " " + usuario.getGrupo() + " "
                     + usuario.getSituacao());
             return true;
         }
@@ -238,11 +238,7 @@ public class UsuarioManager implements Serializable {
 
     private boolean verificaAlteracaoLogin() {
         String loginAtual = UsuarioDao.getInstance().buscarPorId(usuario);
-        if (loginAtual.equals(usuario.getLogin())) {
-            return false;
-        } else {
-            return true;
-        }
+        return !loginAtual.equals(usuario.getLogin());
     }
 
     /**

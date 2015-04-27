@@ -14986,3 +14986,5 @@
 2015-04-27 18:47:22 DEBUG LogicalConnectionImpl:246 - Releasing JDBC connection
 2015-04-27 18:47:22 DEBUG LogicalConnectionImpl:264 - Released JDBC connection
 2015-04-27 18:54:11 DEBUG logging:65 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+2015-04-27 18:55:39 DEBUG logging:65 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
+2015-04-27 18:56:14 DEBUG logging:65 - Logging Provider: org.jboss.logging.Log4jLoggerProvider
