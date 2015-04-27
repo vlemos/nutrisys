@@ -53,7 +53,7 @@ public class UsuarioDao extends Conn {
      * @return retorna lista de todos os usuarios
      */
     public List<Usuario> listaTodos(){
-      return dao.listarTodos("from Usuario");
+      return dao.listarTodos("from Usuario usu ORDER BY usu.login");
   }
 
     /**
@@ -67,7 +67,7 @@ public class UsuarioDao extends Conn {
             abreConexao();
             
             //System.out.println("Fez a consulta do Usuario");
-            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.situacao=? and usu.login=? ORDER BY usu.login asc")
+            usuario = (Usuario) sessao.createQuery("from Usuario usu where usu.situacao=? and usu.login=? ORDER BY usu.login desc")
                     .setString(0, "ATIVO")
                     .setString(1, login)
                     .uniqueResult();
@@ -77,6 +77,32 @@ public class UsuarioDao extends Conn {
             fechaConexao();
         } 
         return usuario;
+    }
+
+    public String remover(Usuario usuario) {
+        logger.info("Inicia a remoção do usuario... passa a responsabilidade para o GenericDao");
+        return dao.remover(usuario);
+    }
+
+    public String buscarPorId(Usuario usuario) {
+        Usuario usuarioAtual = null;
+        logger.info("Inicia a busca por ID... passa a responsabilidade para o GenericDao");
+        try {
+            abreConexao();
+            usuarioAtual = (Usuario) sessao.createQuery("from Usuario usu where usu.idusuario=?")
+                    .setInteger(0, usuario.getIdusuario())
+                    .uniqueResult();
+            fechaConexao();
+            return usuarioAtual.getLogin();
+        } catch (HibernateException e) {
+            logger.error("Erro na Consulta " + e.getMessage());
+            return null;
+        }
+    }
+
+    public String atualizar(Usuario usuario) {
+        logger.info("Inicia a atualização... passa para o GenericDao");
+        return dao.atualizar(usuario);
     }
  
 }

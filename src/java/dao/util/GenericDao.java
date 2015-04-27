@@ -8,6 +8,7 @@ package dao.util;
 import java.io.Serializable;
 import java.util.List;
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.exception.ConstraintViolationException;
 
 
@@ -53,7 +54,20 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
      */
     @Override
     public String atualizar(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        logger.info("Entrou no GenericDao");
+        
+        try {
+            logger.info("Abrindo Conexao");
+            abreConexao();
+            logger.info("Atualizando Objeto");
+            sessao.update(t);
+            transaction.commit();
+            sessao.flush();
+            fechaConexao();
+            return "Atualizado com Sucesso!";
+        } catch (HibernateException e) {
+            return "Erro ao atualizar ! " + e.getMessage();
+        }
     }
 
     /**
@@ -64,7 +78,18 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
      */
     @Override
     public String remover(Object t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try{
+            abreConexao();
+            sessao.delete(t);
+            transaction.commit();
+            sessao.flush();
+            fechaConexao();
+            logger.info("Removido com sucesso!");
+            return "Removido com Sucesso!";
+        }catch(Exception e){
+            logger.error("Erro ao remover objeto " + e.getMessage());
+            return "Erro ao remover Registro " + e.getMessage();
+        }
     }
 
     /**
@@ -97,6 +122,8 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
     public List listarTodosSituacao(String situacao) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+   
     
     
     

@@ -27,10 +27,13 @@ import org.apache.log4j.Logger;
 @ManagedBean(name = "usuarioManager")
 @SessionScoped
 public class UsuarioManager implements Serializable {
-   final static Logger logger = Logger.getLogger(UsuarioManager.class);
+    final static Logger logger = Logger.getLogger(UsuarioManager.class);
+    private boolean alteraCampoLogin = Boolean.FALSE;
     private Usuario usuario = new Usuario();
     private List<Usuario> usuarios;
     private String acao = "";
+    
+    
     
     /**
      *
@@ -83,48 +86,112 @@ public class UsuarioManager implements Serializable {
      * @return Chama a tela UsuarioManter
      */
     public String novo(){
+        setAlteraCampoLogin(false);
         acao = "novo";
         usuario = new Usuario();
         return "/restrito/usuarioManter.xhtml";
     }
     
     /**
+     *
+     * Remove a seleção atual
+     * @return Retorna a propria pagina
+     */
+    public String remover(){
+        logger.info("usuario selecionado para ser removido " + usuario.getLogin());
+        if(usuario.getLogin().equals("admin")){
+            logger.info("não pode remover admin");
+            addMessage("Atenção", "O usuario admin não pode ser removido");
+        }else{
+            logger.info("chama o remover do dao de usuario");
+            addMessage("Remover",UsuarioDao.getInstance().remover(usuario));
+        }
+        
+        return "/restrito/usuario.xhtml";
+    }
+    
+    /**
+     *
+     * @return Pagina de Manter Usuario 
+     */
+    public String atualizar(){
+        acao = "atualizar";
+        setAlteraCampoLogin(true);
+        return "/restrito/usuarioManter.xhtml";
+    }
+    
+     public void addMessage(String summary, String detail) {
+        FacesMessage message = new FacesMessage(summary, detail);
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+    
+    
+    
+    /**
      * Grava o usuario ( Atualiza ou Inclui um Novo )
      * @return Retorna para a pagina de Manutenção ou de lista de usuarios.
      */
     public String gravar() {
-        String retorno = "";
-        //usuario = new Usuario();
-       System.out.println("Entrou no menu gravar");
-       logger.info("Chamou o Menu Gravar");
+        
+    
+        System.out.println("Entrou no menu gravar");
+        logger.info("Chamou o Menu Gravar");
         if (acao.equals("novo")) {
             logger.info("acao novo encontrado");
-            if ((usuario.getLogin().equals("")) || (Arrays.toString(usuario.getSenha()).equals("")) || ((usuario.getGrupo() == null)) || (usuario.getSituacao().equals(""))) {
-                logger.info("não preencheu os requisitos.... envia msg de erro");
-                FacesMessage msg = new FacesMessage("ERROR", "Favor preencher todos os campos");
-                FacesContext.getCurrentInstance().addMessage(null, msg);
-                return "/restrito/usuarioManter.xhtml";
-            } else {
+            if (verificaCampos() == true) {
                 logger.info("preencheu os requisitos... chama o DAO para Salvar");
                 usuario.setTrocasenha("N");
-                FacesMessage msg = new FacesMessage("",UsuarioDao.getInstance().salvar(usuario));
-                FacesContext.getCurrentInstance().addMessage(null, msg);
+                addMessage("", UsuarioDao.getInstance().salvar(usuario));
                 return "/restrito/usuario.xhtml";
+            } else {
+                return "/restrito/usuarioManter.xhtml";
             }
         } else {
-            return "/restrito/usuarioManter.xhtml";
+            if (acao.equals("atualizar")) {
+                logger.info("Acao atualizar encontrado");
+                if (verificaAlteracaoLogin() == true) { //verificar também se o login do usuario foi alterado... pois este não pode sofrer alteração
+                    addMessage("Erro", "O Login não pode ser alterado!"); // houve alteração do LOGIN... não permitido....
+                    return "/restrito/usuarioManter.xhtml";
+                } else {
+                    if (verificaCampos() == false) {
+                        return "/restrito/usuarioManter.xhtml";
+                    } else {
+                        logger.info("preencheu os requisitos... chama o DAO para Atualizar");
+                        addMessage("", UsuarioDao.getInstance().atualizar(usuario));
+                        return "/restrito/usuario.xhtml";
+                    }
+                }
+            } else {
+                addMessage("ERRO", "Erro interno...");
+                return "/restrito/usuarioManter.xhtml";
+            }
         }
-
     }
-    
+
+    private boolean verificaCampos() {
+        if ((usuario.getLogin().equals("")) || (Arrays.toString(usuario.getSenha()).equals("")) || ((usuario.getGrupo() == null)) || (usuario.getSituacao().equals(""))) {
+            logger.info("não preencheu os requisitos.... envia msg de erro " + usuario.getLogin() + " " + usuario.getSenha().toString() + " " + usuario.getGrupo() + " "
+                    + usuario.getSituacao());
+            
+            addMessage("ERROR", "Favor preencher todos os campos");
+            return false;
+        } else {
+             logger.info("preencheu os requisitos.... " + usuario.getLogin() + " " + usuario.getSenha().toString() + " " + usuario.getGrupo() + " "
+                    + usuario.getSituacao());
+            return true;
+        }
+    }
+
     /**
      *
      * @param event
      *  Verifica o Usuario Selecionado
      */
     public void onRowSelect(SelectEvent event) {
-        FacesMessage msg = new FacesMessage("Usuario Selecionado", ((Usuario) event.getObject()).getLogin());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        //usuario = (Usuario) event.getObject();
+        addMessage("Usuario Selecionado", ((Usuario) event.getObject()).getLogin());
+        
+        
     }
  
     /**
@@ -133,8 +200,8 @@ public class UsuarioManager implements Serializable {
      * Verifica o Usuario Não Selecionado
      */
     public void onRowUnselect(UnselectEvent event) {
-        FacesMessage msg = new FacesMessage("Usuário não Selecionado", ((Usuario) event.getObject()).getLogin());
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        addMessage("Usuário não Selecionado", ((Usuario) event.getObject()).getLogin());
+        
     }
 
     /**
@@ -157,7 +224,7 @@ public class UsuarioManager implements Serializable {
             } else {
                 // senha não confere.... retorna msg de erro
                 FacesContext.getCurrentInstance().addMessage("Login", new FacesMessage("Usuario/senha Inválido"));
-                System.out.println("Usuario/senha Inválido");
+                //System.out.println("Usuario/senha Inválido");
                 return "index.xhtml";
 
             }
@@ -167,5 +234,28 @@ public class UsuarioManager implements Serializable {
             System.out.println("Usuario não encontrado ou Inativo");
             return "index.xhtml";
         }
+    }
+
+    private boolean verificaAlteracaoLogin() {
+        String loginAtual = UsuarioDao.getInstance().buscarPorId(usuario);
+        if (loginAtual.equals(usuario.getLogin())) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * @return the alteraCampoLogin
+     */
+    public boolean isAlteraCampoLogin() {
+        return alteraCampoLogin;
+    }
+
+    /**
+     * @param alteraCampoLogin the alteraCampoLogin to set
+     */
+    public void setAlteraCampoLogin(boolean alteraCampoLogin) {
+        this.alteraCampoLogin = alteraCampoLogin;
     }
 }

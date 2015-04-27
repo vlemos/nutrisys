@@ -54,6 +54,8 @@ public interface IDao<T> {
      * Interface do metodo listarTodosSituacao
      */
     List<T> listarTodosSituacao(String situacao);
+    
+   
             
     
 }
