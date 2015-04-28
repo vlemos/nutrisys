@@ -7423,3 +7423,5 @@ org.postgresql.util.PSQLException: ERRO: atualização ou exclusão em tabela "grup
 2015-04-28 18:31:36 DEBUG TwoPhaseLoad:286 - Done materializing entity [model.Grupo#4]
 2015-04-28 18:31:36 DEBUG LogicalConnectionImpl:246 - Releasing JDBC connection
 2015-04-28 18:31:36 DEBUG LogicalConnectionImpl:264 - Released JDBC connection
+2015-04-28 18:39:26 INFO  MenuManager:36 - chamou o menuUsuario
+2015-04-28 18:39:26 INFO  MenuManager:45 - chamou o menuGrupo
