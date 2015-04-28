@@ -100,7 +100,7 @@ public class Grupo  implements IBaseEntity, java.io.Serializable {
      */
     @Override
     public Long getId() {
-        return new Long(idgrupo);
+        return (long) idgrupo;
     }
 
     @Override

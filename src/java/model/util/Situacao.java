@@ -10,9 +10,22 @@ package model.util;
  * @author vinicius.lemos
  */
 public enum Situacao {
-    ATIVO("ATIVO"), INATIVO("INATIVO");
+
+    /**
+     * Retorna a ATIVO
+     */
+    ATIVO("ATIVO"),
+
+    /**
+     * Retorna INATIVO
+     */
+    INATIVO("INATIVO");
     private final String situacao;
     
+    /**
+     * Retorna a Situação escolhida
+     * @return
+     */
     public String getLabel(){
         return situacao;
     }

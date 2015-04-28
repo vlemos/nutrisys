@@ -17,15 +17,32 @@ import model.util.IBaseEntity;
  */
 public class Converte implements Converter {
 
+    /**
+     * Adiciona o Atributos basicos na classe Converte
+     * @param component
+     * @param o
+     */
     protected void addAttribute(UIComponent component, IBaseEntity o) {
         String key = o.getId().toString(); // codigo da empresa como chave neste caso  
         this.getAttributesFrom(component).put(key, o);
     }
 
+    /**
+     * Pega os atributos da Classe
+     * @param component
+     * @return
+     */
     protected Map<String, Object> getAttributesFrom(UIComponent component) {
         return component.getAttributes();
     }
 
+    /**
+     * Pega o Objeto
+     * @param context
+     * @param component
+     * @param value
+     * @return
+     */
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null) {
@@ -34,6 +51,13 @@ public class Converte implements Converter {
         return null;
     }
 
+    /**
+     * Pega o Objeto e retorna a String
+     * @param context
+     * @param component
+     * @param value
+     * @return
+     */
     @Override
     public String getAsString(FacesContext context, UIComponent component, Object value) {
         if (value != null && !"".equals(value)) {

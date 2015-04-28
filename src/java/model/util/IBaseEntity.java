@@ -10,5 +10,11 @@ package model.util;
  * @author vinicius.lemos
  */
 public interface IBaseEntity {
-     public Long getId(); 
+ 
+    /**
+     * Chave principal para as classe de Modelo para realizar a comparação do
+     * metodo Equals e HashCode
+     * @return
+     */
+    public Long getId(); 
 }

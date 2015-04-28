@@ -79,11 +79,21 @@ public class UsuarioDao extends Conn {
         return usuario;
     }
 
+    /**
+     * Remover o usuario
+     * @param usuario
+     * @return
+     */
     public String remover(Usuario usuario) {
         logger.info("Inicia a remoção do usuario... passa a responsabilidade para o GenericDao");
         return dao.remover(usuario);
     }
 
+    /**
+     * Busca o Usuario pelo ID
+     * @param usuario
+     * @return
+     */
     public String buscarPorId(Usuario usuario) {
         Usuario usuarioAtual = null;
         logger.info("Inicia a busca por ID... passa a responsabilidade para o GenericDao");
@@ -100,6 +110,11 @@ public class UsuarioDao extends Conn {
         }
     }
 
+    /**
+     * Atualiza o Usuario
+     * @param usuario
+     * @return
+     */
     public String atualizar(Usuario usuario) {
         logger.info("Inicia a atualização... passa para o GenericDao");
         return dao.atualizar(usuario);

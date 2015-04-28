@@ -27,6 +27,7 @@ import org.apache.log4j.Logger;
 @ManagedBean(name = "usuarioManager")
 @SessionScoped
 public class UsuarioManager implements Serializable {
+    
     final static Logger logger = Logger.getLogger(UsuarioManager.class);
     private boolean alteraCampoLogin = Boolean.FALSE;
     private Usuario usuario = new Usuario();
@@ -130,7 +131,12 @@ public class UsuarioManager implements Serializable {
         
     }
     
-     public void addMessage(String summary, String detail) {
+    /**
+     * Gerador de Mensagem pra tela
+     * @param summary
+     * @param detail
+     */
+    public void addMessage(String summary, String detail) {
         FacesMessage message = new FacesMessage(summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
