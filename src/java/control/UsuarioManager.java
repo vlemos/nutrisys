@@ -119,11 +119,16 @@ public class UsuarioManager implements Serializable {
      *
      * @return Pagina de Manter Usuario 
      */
-    public String atualizar(){
+    public String atualizar() {
         if (usuario != null) {
-            acao = "atualizar";
-            setAlteraCampoLogin(true);
-            return "/restrito/usuarioManter.xhtml";
+            if (usuario.getLogin().equals("admin")) {
+                addMessage("Atenção", "O usuario admin não pode ser alterado");
+                return "/restrito/usuario.xhtml";
+            } else {
+                acao = "atualizar";
+                setAlteraCampoLogin(true);
+                return "/restrito/usuarioManter.xhtml";
+            }
         }else{
             addMessage("", "Favor selecionar um usuario");
             return "/restrito/usuario.xhtml";

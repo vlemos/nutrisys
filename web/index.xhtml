@@ -9,8 +9,8 @@
         <title>Sistema Nutrisys</title>
     </h:head>
     <h:body>       
-   
-               
+
+
         <div class="header">
             <ui:insert name="header">
                 <ui:include src="/logo.xhtml"></ui:include>
@@ -24,14 +24,21 @@
 
                     <h:outputText value="Usuario:" />
                     <p:inputText id="txtUsuario" maxlength="15" required="true" requiredMessage="Usuário requerido" 
-                                 value="${usuarioManager.usuario.login}"  />
+                                 value="${usuarioManager.usuario.login}">  
+                                 <p:tooltip id="toolTipUsuario" for="txtUsuario" value="Login do Usuário" showEffect="clip" hideEffect="explode" />
+                    </p:inputText>
 
                     <h:outputText value="Senha :" />
                     <p:keyboard id="txtSenha" required="true" requiredMessage="Preencha com a senha"  password="true"
-                                value="${usuarioManager.usuario.senha}" converter="byteconverter" />
-                    
-                    <p:commandButton value="Login" ajax="true" icon="ui-icon-check" validateClient="true" 
-                                     action="${usuarioManager.logar}" update="msgs" />
+                                value="${usuarioManager.usuario.senha}" converter="byteconverter"   >
+                                <p:tooltip id="toolTipSenha" for="txtSenha" value="Senha de Login" showEffect="clip" hideEffect="explode" />
+
+                    </p:keyboard>
+
+                    <p:commandButton value="Login" ajax="true" icon="ui-icon-check" validateClient="true" id="login"
+                                     action="${usuarioManager.logar}" update="msgs" >
+                                     <p:tooltip id="toolTipLogin" for="login" value="Clique para entrar" showEffect="clip" hideEffect="explode" />
+                    </p:commandButton>
 
                 </h:panelGrid>
             </p:panel>
