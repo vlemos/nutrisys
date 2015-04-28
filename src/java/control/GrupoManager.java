@@ -30,19 +30,20 @@ public class GrupoManager implements Serializable {
     private List<Grupo> grupos;
     final static Logger logger = Logger.getLogger(GrupoManager.class);
     private String acao = "";
-    
+
 
     /**
      *
-     * @return retorna o objeto grupo para a tela
+     * @return retorna o objeto usuario para a tela
      */
     public Grupo getGrupo() {
+        //usuario = new Usuario();
         return this.grupo;
     }
 
     /**
      *
-     * @param grupo Passa o obejto grupo para o controle
+     * @param grupo Passa o obejto usuario para o controle
      */
     public void setGrupo(Grupo grupo) {
         this.grupo = grupo;
@@ -53,18 +54,18 @@ public class GrupoManager implements Serializable {
      * @return chama a tela GrupoManter
      */
     public String novo(){
-        acao = "novo";
+        
         grupo = new Grupo();
         return "/restrito/grupoManter.xhtml";
     }
 
     /**
      *
-     * @return retorna um objeto do tipo List contendo todos os grupos do
+     * @return retorna um objeto do tipo List contendo todos os usuarios do
      * Banco de Dados
      */
     public List<Grupo> getGrupos() {
-        // aqui entrarar a consulta ao Banco de dados para buscar os grupos cadastrados
+        // aqui entrarar a consulta ao Banco de dados para buscar os usuarios cadastrados
         grupos = new ArrayList<>();
         grupos = GrupoDao.getInstance().listaTodos();
         return grupos;
@@ -72,7 +73,7 @@ public class GrupoManager implements Serializable {
 
     /**
      *
-     * @param grupos Passa de volta para o controle uma lista de grupos
+     * @param grupos Passa de volta para o controle uma lista de usuarios
      */
     public void setGrupos(List<Grupo> grupos) {
         this.grupos = grupos;
@@ -97,7 +98,7 @@ public class GrupoManager implements Serializable {
         FacesMessage msg = new FacesMessage("Usuário não Selecionado", ((Grupo) event.getObject()).getNome());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
      /**
      *
      * Remove a seleção atual
@@ -113,10 +114,10 @@ public class GrupoManager implements Serializable {
                 logger.info("chama o remover do dao de Grupo");
                 addMessage("Remover", GrupoDao.getInstance().remover(grupo));
             }
-          
+    
         }else{
             addMessage("", "Favor Selecionar um Grupo");
-        }
+}
         return "/restrito/grupo.xhtml";
     }
     
