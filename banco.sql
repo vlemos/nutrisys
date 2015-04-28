@@ -6,13 +6,15 @@ CREATE TABLE grupo
 (
   idgrupo serial NOT NULL,
   nome character varying(15) NOT NULL,
-  CONSTRAINT pk_idgrupo PRIMARY KEY (idgrupo)
+  CONSTRAINT pk_idgrupo PRIMARY KEY (idgrupo),
+  CONSTRAINT uk_nome UNIQUE (nome)
 )
 WITH (
   OIDS=TRUE
 );
 ALTER TABLE grupo
   OWNER TO postgres;
+
 
 
 -- Table: usuario
@@ -50,4 +52,4 @@ INSERT INTO grupo(
 
 INSERT INTO usuario(
             login, senha, situacao, idgrupo,trocasenha)
-    VALUES ('admin','admin','ATIVO', 1,'n');
+    VALUES ('admin','admin','ATIVO', 1,'N');

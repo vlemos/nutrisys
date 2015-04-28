@@ -8,8 +8,8 @@
             <column name="idgrupo" />
             <generator class="increment" />
         </id>
-        <property name="nome" type="string">
-            <column name="nome" length="15" not-null="true" />
+        <property name="nome" type="string" >
+            <column name="nome" length="15" not-null="true" unique="true"  />
         </property>
         
         <set name="usuarios" table="usuario" inverse="true" lazy="true" fetch="select"  >
