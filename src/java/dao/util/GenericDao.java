@@ -86,7 +86,12 @@ public class GenericDao<T> extends Conn implements IDao,Serializable {
             fechaConexao();
             logger.info("Removido com sucesso!");
             return "Removido com Sucesso!";
-        }catch(Exception e){
+        }catch(ConstraintViolationException e){
+            logger.error("Erro ao remover objeto --- objeto ja esta sendo usado" + e.getMessage());
+            return "O registro ja esta sendo utilizado... não pode ser removido " ;
+            
+        }
+        catch(Exception e){
             logger.error("Erro ao remover objeto " + e.getMessage());
             return "Erro ao remover Registro " + e.getMessage();
         }

@@ -39,6 +39,14 @@ public class MenuManager {
     
     /**
      *
+     * @return chama o Menu para trocar a senha do usuario
+     */
+    public String menuTrocaSenha(){
+        logger.info("chamou o Menu de Trocar Senha");
+        return "/restrito/trocarSenha.xhtml";
+    }
+    /**
+     *
      * @return Chama o Menu do Grupo
      */
     public String menuGrupo(){

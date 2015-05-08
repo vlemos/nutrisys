@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Sistema Nutrisys</title>
+    </h:head>
+    <h:body>       
+        <div class="header">
+            <ui:insert name="header">
+                <ui:include src="/restrito/principal.xhtml"></ui:include>
+            </ui:insert>
+        </div>
+
+        <h:form id="manter">
+            <p:growl id="msgs" showDetail="true" />
+
+            <p:menubar autoDisplay="false" >
+                <p:menuitem value="Gravar" icon="ui-icon-disk" action="#{usuarioManager.gravar}" update="msgs" />
+                <p:menuitem value="Voltar" icon="ui-icon-arrowreturnthick-1-w" action="#{menuManager.menuUsuario}"  />
+            </p:menubar>
+
+            <p:panelGrid id="pUsuarioManter" columns="2" >
+                
+                <h:outputText value="Login:" />
+                <p:inputText value="#{usuarioManager.usuario.login}" disabled="#{usuarioManager.alteraCampoLogin}"  id="login">
+                    <p:tooltip id="toolTipLogin" for="login" value="Login do Usuário" showEffect="clip" hideEffect="explode" />
+                </p:inputText>
+                
+                <h:outputText value="Senha:" />
+                <p:keyboard value="#{usuarioManager.usuario.senha}" password="true" converter="byteconverter" id="senha" >
+                    <p:tooltip id="toolTipSenha" for="senha" value="Senha do Usuário" showEffect="clip" hideEffect="explode" />
+                </p:keyboard>
+                
+                <h:outputText value="Grupo:" />
+                <p:selectOneMenu id="grupo" value="#{usuarioManager.usuario.grupo}" converter="conversor">  
+                    <f:selectItems value="#{grupoManager.grupos}" var="grupo" itemLabel="#{grupo.nome}" itemValue="#{grupo}"/>  
+                    <p:tooltip for="grupo" value="Grupo de acesso do Usuário" showEffect="clip" hideEffect="explode" />
+                </p:selectOneMenu>    
+                
+                
+                <h:outputText value="Situação:"/>
+                <p:selectOneMenu id="sit" value="#{usuarioManager.usuario.situacao}"  >  
+                    <f:selectItems value="#{usuarioManager.situacoes}" var="status" itemLabel="#{status.label}" itemValue="#{status}"/>  
+                    <p:tooltip id="toolTipStatus" for="sit" value="Situação do Usuário" showEffect="clip" hideEffect="explode" />
+                </p:selectOneMenu>    
+                
+                
+               
+            </p:panelGrid>
+        </h:form>
+
+    </h:body>
+</html>
+
