@@ -54,8 +54,9 @@ public class GrupoManager implements Serializable {
      * @return chama a tela GrupoManter
      */
     public String novo(){
-        
+        logger.info("chamou novo grupo");
         grupo = new Grupo();
+        acao = "novo";
         return "/restrito/grupoManter.xhtml";
     }
 
