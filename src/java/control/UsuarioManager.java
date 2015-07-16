@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 import model.Usuario;
 import model.util.Situacao;
 import org.primefaces.event.SelectEvent;
@@ -50,12 +51,11 @@ public class UsuarioManager implements Serializable {
      * @return retorna o objeto usuario para a tela
      */
     public Usuario getUsuario() {
-        //usuario = new Usuario();
+        FacesContext.getCurrentInstance().getAttributes();
         return this.usuario;
     }
 
-    /**
-     *
+    /**   *
      * @param usuario Passa o obejto usuario para o controle
      */
     public void setUsuario(Usuario usuario) {
@@ -241,6 +241,9 @@ public class UsuarioManager implements Serializable {
             System.out.println(senhaTela);
             if (senhaLogado.equals(senhaTela)) {
                 // senha confere.. acessa o sistema
+                HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+                session.setAttribute("usuario",usuario);
+                
                 return "/restrito/principal.xhtml";
             } else {
                 // senha não confere.... retorna msg de erro

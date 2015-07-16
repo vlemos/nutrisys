@@ -18,29 +18,29 @@
             <p:growl id="msgs" showDetail="true" />
 
             <p:menubar autoDisplay="false" >
-                <p:menuitem value="Gravar" icon="ui-icon-disk" action="#" update="msgs" />
-                <p:menuitem value="Voltar" icon="ui-icon-arrowreturnthick-1-w" action="#"  /> 
+                <p:menuitem value="Gravar" icon="ui-icon-disk" action="#{trocaSenhaManager.trocarSenha}" update="msgs" />
+                <p:menuitem value="Voltar" icon="ui-icon-arrowreturnthick-1-w" action="#{trocaSenhaManager.retorno}"  /> 
             </p:menubar>
 
             <p:panelGrid id="pUsuarioTrocaSenha" columns="2" >
                 
                 <h:outputText value="Login:" />
-                <p:inputText value="#" disabled="true"  id="login">
+                <p:inputText value="#{trocaSenhaManager.usuario.login}" disabled="true"  id="login">
                     <p:tooltip id="toolTipLogin" for="login" value="Login do Usuário" showEffect="clip" hideEffect="explode" />
                 </p:inputText>
                 
                 <h:outputText value="Senha Atual:" />
-                <p:keyboard value="#" password="true" converter="byteconverter" id="senhaAtual" >
+                <p:keyboard value="#{trocaSenhaManager.senhaAtual}" password="true" converter="byteconverter" id="senhaAtual" >
                     <p:tooltip id="toolTipSenhaAtual" for="senhaAtual" value="Senha Atual do Usuário" showEffect="clip" hideEffect="explode" />
                 </p:keyboard>
                 
                 <h:outputText value="Nova Senha:" />
-                <p:keyboard value="#" password="true" converter="byteconverter" id="senhaNova" >
+                <p:keyboard value="#{trocaSenhaManager.senhaNova}" password="true" converter="byteconverter" id="senhaNova" >
                     <p:tooltip id="toolTipSenhaNova" for="senhaNova" value="Senha Nova do Usuário" showEffect="clip" hideEffect="explode" />
                 </p:keyboard>
 
                 <h:outputText value="Confirmar Senha Nova:" />
-                <p:keyboard value="#" password="true" converter="byteconverter" id="senhaNovaConfirma" >
+                <p:keyboard value="#{trocaSenhaManager.senhaNovaConfirma}" password="true" converter="byteconverter" id="senhaNovaConfirma" >
                     <p:tooltip id="toolTipSenhaNovaConfirma" for="senhaNovaConfirma" value="Confirme a senha nova" showEffect="clip" hideEffect="explode" />
                 </p:keyboard>
                 
