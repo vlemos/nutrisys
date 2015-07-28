@@ -14,7 +14,7 @@
                     <ui:include src="/logo.xhtml"></ui:include>
                 </ui:insert>
             </div>
-        <h:form id="fMenu">
+        <h:form id="fMenu"> 
             
                 
             <p:menubar style="margin-top: 1% " autoDisplay="false" id="menuBar" >
@@ -22,8 +22,19 @@
                     <p:submenu label="usuario" icon="ui-icon-contact" >
                         <p:menuitem value="Grupo Usuario" action="#{menuManager.menuGrupo}" />
                         <p:menuitem value="Cadastro Usuario" action="#{menuManager.menuUsuario}"  />
-                        <p:menuitem value="trocar Senha" action="#{menuManager.menuTrocaSenha}"  />
+                        <p:menuitem value="Trocar Senha" action="#{menuManager.menuTrocaSenha}"  />
                         <p:menuitem value="Acessos" url="#" />
+                    </p:submenu>
+                    
+                    <p:submenu label="Clientes" icon="ui-icon-contact" >
+                        <p:menuitem value="Cadastro" action="#" />
+                        <p:menuitem value="Rota" action="#"  />
+                        <p:menuitem value="Local Serviço" action="#"  />
+                    </p:submenu>
+                    
+                    <p:submenu label="Transporte" icon="ui-icon-contact" >
+                        <p:menuitem value="Motorista" action="#" />
+                        <p:menuitem value="Veiculo" action="#"  />
                     </p:submenu>
                       <p:separator />
      

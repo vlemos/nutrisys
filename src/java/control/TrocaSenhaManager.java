@@ -5,7 +5,10 @@
  */
 package control;
 
+import dao.UsuarioDao;
 import java.io.Serializable;
+import java.util.Arrays;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -24,9 +27,9 @@ public class TrocaSenhaManager implements Serializable{
     
     final static Logger logger = Logger.getLogger(TrocaSenhaManager.class);
     private Usuario usuario;
-    private String senhaAtual;
-    private String senhaNova;
-    private String senhaNovaConfirma;
+    private byte[] senhaAtual;
+    private byte[] senhaNova;
+    private byte[] senhaNovaConfirma;
     
     
        public void addMessage(String summary, String detail) {
@@ -46,10 +49,34 @@ public class TrocaSenhaManager implements Serializable{
         if (todosCamposPreenchidos() == false){
             addMessage("", "Favor preencher Todos os campos para continuar");
             return "/restrito/trocarSenha.xhtml";
-        } 
-                
+        }
         
-        return "/restrito/principal.xhtml";
+        //verifica se senha atual digitada confere coma senha atual do banco
+        String senhaAtuals = Arrays.toString(usuario.getSenha());
+        String confereSenhaAtual = Arrays.toString(senhaAtual);
+        
+        if(!senhaAtuals.equals(confereSenhaAtual)){
+            addMessage("", "Senha atual não confere!");
+            return "/restrito/trocarSenha.xhtml";
+        }
+        
+        //verifica se a nova senha bate com a confirmação digitada.
+        String senhaNovas = Arrays.toString(getSenhaNova());
+        String senhaConfirmaNovas = Arrays.toString(getSenhaNovaConfirma());
+        
+        if(!senhaNovas.equals(senhaConfirmaNovas)){
+            addMessage("","Confirmação da Nova senha não bate com a Nova senha escolhida");
+            return "/restrito/trocarSenha";
+        }
+                
+        // estando tudo certo, então atualiza a nova senha do usuario
+        Usuario usu = UsuarioDao.getInstance().buscarPorNomeAtivo(usuario.getLogin());
+        usu.setSenha(senhaNova);
+        //System.out.println(usu.getIdusuario());
+        
+        addMessage("",UsuarioDao.getInstance().atualizar(usu));
+        
+        return "/restrito/trocarSenha.xhtml";
     }
     
     public Usuario getUsuario(){
@@ -69,42 +96,42 @@ public class TrocaSenhaManager implements Serializable{
     /**
      * @return the senhaAtual
      */
-    public String getSenhaAtual() {
+    public byte[] getSenhaAtual() {
         return senhaAtual;
     }
 
     /**
      * @param senhaAtual the senhaAtual to set
      */
-    public void setSenhaAtual(String senhaAtual) {
+    public void setSenhaAtual(byte[] senhaAtual) {
         this.senhaAtual = senhaAtual;
     }
 
     /**
      * @return the senhaNova
      */
-    public String getSenhaNova() {
+    public byte[] getSenhaNova() {
         return senhaNova;
     }
 
     /**
      * @param senhaNova the senhaNova to set
      */
-    public void setSenhaNova(String senhaNova) {
+    public void setSenhaNova(byte[] senhaNova) {
         this.senhaNova = senhaNova;
     }
 
     /**
      * @return the senhaNovaConfirma
      */
-    public String getSenhaNovaConfirma() {
+    public byte[] getSenhaNovaConfirma() {
         return senhaNovaConfirma;
     }
 
     /**
      * @param senhaNovaConfirma the senhaNovaConfirma to set
      */
-    public void setSenhaNovaConfirma(String senhaNovaConfirma) {
+    public void setSenhaNovaConfirma(byte[] senhaNovaConfirma) {
         this.senhaNovaConfirma = senhaNovaConfirma;
     }
 
@@ -114,7 +141,21 @@ public class TrocaSenhaManager implements Serializable{
         System.out.println(getSenhaAtual());
         System.out.println(getSenhaNova());
         System.out.println(getSenhaNovaConfirma());
-        return (!getSenhaAtual().trim().equals("")) && (!getSenhaNova().trim().equals("")) && (!getSenhaNovaConfirma().trim().equals(""));
+        
+        String senhaAtuals = Arrays.toString(getSenhaAtual());
+        String senhaNovas = Arrays.toString(getSenhaNova());
+        String senhaNovaConfirmas = Arrays.toString(getSenhaNovaConfirma());
+        
+        System.out.println(senhaAtuals);
+        System.out.println(senhaNovas);
+        System.out.println(senhaNovaConfirmas);
+        
+      // senao não preencheu algum campo, então dá erro.... senão retorna true caso tenha sido tudo preenchido
+        if ((senhaAtuals.trim().equals("[]")) || (senhaNovas.trim().equals("[]")) || (senhaNovaConfirmas.trim().equals("[]"))) {
+            return false;
+        } else {
+            return true;
+        }
     }
     
     

@@ -1,14 +1,14 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 04/12/2014 12:06:16 by Hibernate Tools 4.3.1 -->
+<!-- Generated 27/07/2015 21:42:38 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="model.Usuario" table="usuario" schema="public" optimistic-lock="version">
+    <class name="model.Usuario" table="usuario" schema="public">
         <id name="idusuario" type="int">
             <column name="idusuario" />
-            <generator class="increment" />
+            <generator class="increment"></generator>
         </id>
-        <many-to-one name="grupo" class="model.Grupo" fetch="select" lazy="false"> 
+        <many-to-one name="grupo" class="model.Grupo" fetch="select">
             <column name="idgrupo" />
         </many-to-one>
         <property name="login" type="string">
@@ -19,7 +19,7 @@
         </property>
         <property name="situacao" type="string">
             <column name="situacao" length="10" not-null="true" />
-        </property> 
+        </property>
         <property name="trocasenha" type="string">
             <column name="trocasenha" length="1" not-null="true" />
         </property>
